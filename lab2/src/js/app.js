@@ -44,15 +44,25 @@ App = {
     var id = $('#id').val();
     var name = $('#name').val();
     var price = $('#price').val();
-    var age = $('#age').val();
+    var email = $('#email').val();
 
-    console.log(id);
-    console.log(price);
-    console.log(name);
-    console.log(age);
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
 
-    $('#name').val('');
-    $('#age').val('');
+      var account = accounts[0];
+      App.contracts.RealEstate.deployed().then(function(instance) {
+        var nameUtf8Encoded = utf8.encode(name);
+        return instance.buyRealEstate(id, web3.toHex(nameUtf8Encoded), email, { from: account, value: price });
+      }).then(function() {
+        $('#name').val('');
+        $('#email').val('');
+        $('#buyModal').modal('hide');       
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
   },
 
   loadRealEstates: function() {
