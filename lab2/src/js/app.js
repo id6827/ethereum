@@ -22,7 +22,7 @@ App = {
   },
 
   initWeb3: function() {
-    if (typeof web3 !== 'undefined') {
+     if (typeof web3 !== 'undefined') {
       App.web3Provider = web3.currentProvider;
       web3 = new Web3(web3.currentProvider);
     } else {
@@ -45,7 +45,7 @@ App = {
     var id = $('#id').val();
     var name = $('#name').val();
     var price = $('#price').val();
-    var age = $('#age').val();
+    var email = $('#email').val();
 
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
@@ -55,8 +55,8 @@ App = {
       var account = accounts[0];
       App.contracts.RealEstate.deployed().then(function(instance) {
         var nameUtf8Encoded = utf8.encode(name);
-        //return instance.buyRealEstate(id, web3.toHex(nameUtf8Encoded), age, { from: account, value: price });
-        return instance.buyRealEstate(id, nameUtf8Encoded, age, { from: account, value: price });
+        
+        return instance.buyRealEstate(id, nameUtf8Encoded, email, { from: account, value: price });
       }).then(function() {
         $('#name').val('');
         $('#age').val('');
@@ -69,6 +69,8 @@ App = {
 
   loadRealEstates: function() {
     App.contracts.RealEstate.deployed().then(function(instance) {
+      window.ethereum.enable();
+      
       return instance.getAllBuyers.call();
     }).then(function(buyers) {
       for (i = 0; i < buyers.length; i++) {
@@ -134,7 +136,7 @@ $(function() {
       
       $(e.currentTarget).find('#buyerAddress').text(buyerInfo[0]);
       $(e.currentTarget).find('#buyerName').text(nameUtf8Decoded);
-      $(e.currentTarget).find('#buyerAge').text(buyerInfo[2]);
+      $(e.currentTarget).find('#buyerEmail').text(buyerInfo[2]);
     }).catch(function(err) {
       console.log(err.message);
     })

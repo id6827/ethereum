@@ -75,11 +75,11 @@
             <input type="hidden" id="id" />
             <input type="hidden" id="price" />
             <input type="text" class="form-control" id="name" placeholder="이름" /><br/>
-            <input type="number" class="form-control" id="age" placeholder="나이" />
+            <input type="text" class="form-control" id="email" placeholder="이메일" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary" onclick="App.buyRealEstate(); return false;">제출</button>
+            <button type="button" class="btn btn-primary" onclick="App.buyRealEstate(); return false;">매입</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -95,7 +95,7 @@
           <div class="modal-body">
             <strong>계정주소</strong>: <span id="buyerAddress"></span><br/>
             <strong>이름</strong>: <span id="buyerName"></span><br/>
-            <strong>나이</strong>: <span id="buyerAge"></span><br/>
+            <strong>이메일</strong>: <span id="buyerEmail"></span><br/>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
